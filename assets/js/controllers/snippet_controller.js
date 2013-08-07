@@ -1,11 +1,11 @@
 /* jshint strict: true */
-/*global Codeshare */
+/*global Sharecode */
 /*global Ember */
 
 //(function () {
  'use strict';
 
- Codeshare.SnippetController = Ember.ObjectController.extend({
+ Sharecode.SnippetController = Ember.ObjectController.extend({
    isEditing: false,
 
    editSnippet: function () {

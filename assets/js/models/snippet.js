@@ -1,12 +1,12 @@
 /* jshint strict: true */
-/*global Codeshare */
+/*global Sharecode */
 /*global Ember */
 /*global DS */
 
 //(function () {
   'use strict';
 
-  Codeshare.Snippet = DS.Model.extend({
+  Sharecode.Snippet = DS.Model.extend({
     name: DS.attr('string'),
     isCompleted: DS.attr('boolean'),
 

@@ -1,33 +1,33 @@
 /* jshint strict: true */
-/*global Codeshare */
+/*global Sharecode */
 /*global Ember */
 
 //(function () {
   'use strict';
 
-  Codeshare.Router.map(function () {
+  Sharecode.Router.map(function () {
     this.resource('snippets', { path: '/' }, function () {
       this.route('active');
       this.route('completed');
     });
   });
 
-  Codeshare.SnippetsRoute = Ember.Route.extend({
+  Sharecode.SnippetsRoute = Ember.Route.extend({
     model: function () {
-      return Codeshare.Snippet.find();
+      return Sharecode.Snippet.find();
     }
   });
 
-  Codeshare.SnippetsIndexRoute = Ember.Route.extend({
+  Sharecode.SnippetsIndexRoute = Ember.Route.extend({
     setupController: function () {
-      var snippets = Codeshare.Snippet.find();
+      var snippets = Sharecode.Snippet.find();
       this.controllerFor('snippets').set('filteredSnippets', snippets);
     }
   });
 
-  Codeshare.SnippetsActiveRoute = Ember.Route.extend({
+  Sharecode.SnippetsActiveRoute = Ember.Route.extend({
     setupController: function () {
-      var snippets = Codeshare.Snippet.filter(function (snippet) {
+      var snippets = Sharecode.Snippet.filter(function (snippet) {
         if (!snippet.get('isCompleted')) {
           return true;
         }
@@ -37,9 +37,9 @@
     }
   });
 
-  Codeshare.SnippetsCompletedRoute = Ember.Route.extend({
+  Sharecode.SnippetsCompletedRoute = Ember.Route.extend({
     setupController: function () {
-      var snippets = Codeshare.Snippet.filter(function (snippet) {
+      var snippets = Sharecode.Snippet.filter(function (snippet) {
         if (snippet.get('isCompleted')) {
           return true;
         }

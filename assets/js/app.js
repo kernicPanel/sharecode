@@ -1,11 +1,11 @@
-window.Codeshare = Ember.Application.create();
+window.Sharecode = Ember.Application.create();
 
 /*
- *Codeshare.Router.map(function() {
+ *Sharecode.Router.map(function() {
  *  // put your routes here
  *});
  *
- *Codeshare.IndexRoute = Ember.Route.extend({
+ *Sharecode.IndexRoute = Ember.Route.extend({
  *  model: function() {
  *    return ['red', 'yellow', 'blue'];
  *  }

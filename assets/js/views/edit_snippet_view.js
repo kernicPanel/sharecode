@@ -1,12 +1,12 @@
 /* jshint strict: true */
-/*global Codeshare */
+/*global Sharecode */
 /*global Ember */
 /*global DS */
 
 //(function () {
   'use strict';
 
-  Codeshare.EditSnippetView = Ember.TextField.extend({
+  Sharecode.EditSnippetView = Ember.TextField.extend({
     classNames: ['edit'],
 
     valueBinding: 'snippet.name',

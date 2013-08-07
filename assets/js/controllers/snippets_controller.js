@@ -1,11 +1,11 @@
 /* jshint strict: true */
-/*global Codeshare */
+/*global Sharecode */
 /*global Ember */
 
 //(function () {
   'use strict';
 
-  Codeshare.SnippetsController = Ember.ArrayController.extend({
+  Sharecode.SnippetsController = Ember.ArrayController.extend({
     createSnippet: function () {
       // Get the snippet name set by the "New Snippet" text field
       var name = this.get('newTitle');
@@ -14,7 +14,7 @@
       }
 
       // Create the new Snippet model
-      Codeshare.Snippet.createRecord({
+      Sharecode.Snippet.createRecord({
         name: name,
         isCompleted: false
       });
