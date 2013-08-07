@@ -1,7 +1,7 @@
 var superagent = require('superagent');
 var expect = require('expect.js');
 
-describe('express rest api server', function(){
+describe('sharecode rest api server', function(){
   var id, id2;
 
   it('post object', function(done){
@@ -10,11 +10,11 @@ describe('express rest api server', function(){
         email: 'john@rpjs.co'
       })
       .end(function(e,res){
-        // console.log(res.body)
+        //console.log(res.body.snippet[0]._id.length);
         expect(e).to.eql(null);
-        expect(res.body.length).to.eql(1);
-        expect(res.body[0]._id.length).to.eql(24);
-        id = res.body[0]._id;
+        expect(res.body.snippet.length).to.eql(1);
+        expect(res.body.snippet[0]._id.length).to.eql(24);
+        id = res.body.snippet[0]._id;
         done();
       });
   });
@@ -26,11 +26,11 @@ describe('express rest api server', function(){
    *      email: 'john@rpjs.co'
    *    })
    *    .end(function(e,res){
-   *      // console.log(res.body)
+   *      // console.log(res.body.snippet)
    *      expect(e).to.eql(null);
-   *      expect(res.body.length).to.eql(1);
-   *      expect(res.body[0]._id.length).to.eql(24);
-   *      id2 = res.body[0]._id;
+   *      expect(res.body.snippet.length).to.eql(1);
+   *      expect(res.body.snippet[0]._id.length).to.eql(24);
+   *      id2 = res.body.snippet[0]._id;
    *      done();
    *    });
    *});
@@ -39,11 +39,11 @@ describe('express rest api server', function(){
   it('retrieves an object', function(done){
     superagent.get('http://localhost:3000/api/snippets/'+id)
       .end(function(e, res){
-        // console.log(res.body)
+        //console.log(res.body);
         expect(e).to.eql(null);
-        expect(typeof res.body).to.eql('object');
-        expect(res.body._id.length).to.eql(24);
-        expect(res.body._id).to.eql(id);
+        expect(typeof res.body.snippet[0]).to.eql('object');
+        expect(res.body.snippet[0]._id.length).to.eql(24);
+        expect(res.body.snippet[0]._id).to.eql(id);
         done();
       });
   });
@@ -51,10 +51,10 @@ describe('express rest api server', function(){
   it('retrieves a collection', function(done){
     superagent.get('http://localhost:3000/api/snippets')
       .end(function(e, res){
-        // console.log(res.body)
+        //console.log(res.body.snippet);
         expect(e).to.eql(null);
-        expect(res.body.length).to.be.within(1, Infinity);
-        expect(res.body.map(function (item){return item._id;})).to.contain(id);
+        expect(res.body.snippets.length).to.be.within(1, Infinity);
+        expect(res.body.snippets.map(function (item){return item._id;})).to.contain(id);
         done();
       });
   });
@@ -66,9 +66,9 @@ describe('express rest api server', function(){
         email: 'peter@yahoo.com'
       })
       .end(function(e, res){
-        // console.log(res.body)
+        //console.log(res.body);
         expect(e).to.eql(null);
-        expect(typeof res.body).to.eql('object');
+        //expect(typeof res.body.snippet).to.eql('object');
         expect(res.body.msg).to.eql('success');
         done();
       });
@@ -77,12 +77,12 @@ describe('express rest api server', function(){
   it('checks an updated object', function(done){
     superagent.get('http://localhost:3000/api/snippets/'+id)
       .end(function(e, res){
-        // console.log(res.body)
+        //console.log(res.body);
         expect(e).to.eql(null);
-        expect(typeof res.body).to.eql('object');
-        expect(res.body._id.length).to.eql(24);
-        expect(res.body._id).to.eql(id);
-        expect(res.body.name).to.eql('Peter');
+        expect(typeof res.body.snippet[0]).to.eql('object');
+        expect(res.body.snippet[0]._id.length).to.eql(24);
+        expect(res.body.snippet[0]._id).to.eql(id);
+        expect(res.body.snippet[0].name).to.eql('Peter');
         done();
       });
   });
@@ -90,9 +90,9 @@ describe('express rest api server', function(){
   it('removes an object', function(done){
     superagent.del('http://localhost:3000/api/snippets/'+id)
       .end(function(e, res){
-        // console.log(res.body)
+        //console.log(res.body);
         expect(e).to.eql(null);
-        expect(typeof res.body).to.eql('object');
+        //expect(typeof res.body.snippet).to.eql('object');
         expect(res.body.msg).to.eql('success');
         done();
       });

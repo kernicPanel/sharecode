@@ -9,12 +9,13 @@ var db = mongoskin.db('localhost:27017/sharecode', {safe:true});
 app.param('collectionName', function(req, res, next, collectionName){
   if (collectionName === 'snippets') {
     req.collection = db.collection(collectionName);
+    req.collectionName = collectionName;
   }
   return next();
 });
 
 app.use(express.logger('dev'));
-app.use(express.directory('assets'));
+//app.use(express.directory('assets'));
 app.use(express.static('assets'));
 
 //app.use(function(req, res, next){
@@ -24,7 +25,9 @@ app.use(express.static('assets'));
 
 app.get('/', function(req, res) {
   //res.send('please select a collection, e.g., /api/snippets');
+  console.log('get /');
   res.sendfile('assets/index.html');
+  //res.sendfile('index.html');
 });
 
 app.get('/api/:collectionName', function(req, res) {
@@ -32,7 +35,7 @@ app.get('/api/:collectionName', function(req, res) {
     if (e) {
       next(e);
     }
-    res.send(results);
+    res.send({snippets : results});
   });
 });
 
@@ -41,8 +44,8 @@ app.post('/api/:collectionName', function(req, res) {
     if (e) {
       next(e);
     }
-    console.log('results : ', results);
-    res.send(results);
+    console.log('snippets : ', {snippet : results});
+    res.send({snippet : results});
   });
 });
 
@@ -52,7 +55,8 @@ app.get('/api/:collectionName/:id', function(req, res) {
     if (e) {
       next(e);
     }
-    res.send(result);
+    //res.send(result);
+    res.send({snippet : [result]});
   });
 });
 
