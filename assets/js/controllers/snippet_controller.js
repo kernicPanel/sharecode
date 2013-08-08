@@ -17,6 +17,12 @@
 
      snippet.deleteRecord();
      snippet.get('store').commit();
+   },
+   save: function () {
+     var snippet = this.get('model');
+     Ember.run.once(this, function () {
+       snippet.get('store').commit();
+     });
    }
  });
 //}());

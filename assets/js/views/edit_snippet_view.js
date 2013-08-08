@@ -3,6 +3,7 @@
 /*global Ember */
 /*global DS */
 
+
 //(function () {
   'use strict';
 
@@ -21,6 +22,7 @@
 
     focusOut: function () {
       this.set('controller.isEditing', false);
+      this.get('controller').save();
     },
 
     insertNewline: function () {
