@@ -1,5 +1,5 @@
 /*global Snippets DS */
-'use strict';
+//'use strict';
 
 Sharecode.Store = DS.Store.extend({
   revision: 12,
@@ -7,7 +7,15 @@ Sharecode.Store = DS.Store.extend({
 });
 
 DS.RESTAdapter.reopen({
-  namespace: 'api'
+  namespace: 'api',
+  serializer: DS.RESTSerializer.extend({
+    primaryKey: function(type) {
+      return '_id';
+    },
+    serializeId: function(id) {
+      return id.toString();
+    }
+  })
 });
 /*
  *Sharecode.LSAdapter = DS.LSAdapter.extend({
