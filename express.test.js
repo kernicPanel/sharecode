@@ -39,7 +39,7 @@ describe('sharecode rest api server', function(){
   it('retrieves a collection', function(done){
     superagent.get('http://localhost:3000/api/snippets')
       .end(function(e, res){
-        //console.log(res.body.snippet);
+        //console.log(res.body);
         expect(e).to.eql(null);
         expect(res.body.snippets.length).to.be.within(1, Infinity);
         expect(res.body.snippets.map(function (item){return item._id;})).to.contain(id);
