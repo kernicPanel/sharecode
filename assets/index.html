@@ -21,11 +21,16 @@
             {{#each filteredSnippets itemController="snippet"}}
               <li {{bindAttr class="isCompleted:completed isEditing:editing"}}>
                 {{#if isEditing}}
-                  {{view Snippets.EditSnippetView snippetBinding="this"}}
+                  {{view Sharecode.EditSnippetView snippetBinding="this"}}
                 {{else}}
                   {{view Ember.Checkbox checkedBinding="isCompleted" class="toggle"}}
                   <label {{action "editSnippet" on="doubleClick"}}>{{name}}</label>
-                  <button {{action "removeSnippet"}} class="destroy"></button>
+<ul>
+  <li>{{id}}</li>
+  <li>{{name}}</li>
+  <li>{{email}}</li>
+</ul>
+                  <button {{action "removeSnippet"}} class="destroy">delete</button>
                 {{/if}}
                 </li>
             {{/each}}
