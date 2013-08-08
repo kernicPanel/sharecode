@@ -1,64 +1,56 @@
-/* jshint strict: true */
-/*global Sharecode */
-/*global Ember */
+Sharecode.SnippetsController = Ember.ArrayController.extend({
+  createSnippet: function () {
+    // Get the snippet name set by the "New Snippet" text field
+    var name = this.get('newTitle');
+    if (!name.trim()) {
+      return;
+    }
 
-//(function () {
-  'use strict';
+    // Create the new Snippet model
+    Sharecode.Snippet.createRecord({
+      name: name,
+      isCompleted: false
+    });
 
-  Sharecode.SnippetsController = Ember.ArrayController.extend({
-    createSnippet: function () {
-      // Get the snippet name set by the "New Snippet" text field
-      var name = this.get('newTitle');
-      if (!name.trim()) {
-        return;
-      }
+    // Clear the "New Snippet" text field
+    this.set('newTitle', '');
 
-      // Create the new Snippet model
-      Sharecode.Snippet.createRecord({
-        name: name,
-        isCompleted: false
-      });
+    // Save the new model
+    this.get('store').commit();
+  },
 
-      // Clear the "New Snippet" text field
-      this.set('newTitle', '');
+  clearCompleted: function () {
+    var completed = this.filterProperty('isCompleted', true);
+    completed.invoke('deleteRecord');
 
-      // Save the new model
-      this.get('store').commit();
-    },
+    this.get('store').commit();
+  },
 
-    clearCompleted: function () {
-      var completed = this.filterProperty('isCompleted', true);
-      completed.invoke('deleteRecord');
+  remaining: function () {
+    return this.filterProperty('isCompleted', false).get('length');
+  }.property('@each.isCompleted'),
 
-      this.get('store').commit();
-    },
+  remainingFormatted: function () {
+    var remaining = this.get('remaining'),
+    plural = remaining === 1 ? 'item' : 'items';
+    return '<strong>%@</strong> %@ left'.fmt(remaining, plural);
+  }.property('remaining'),
 
-    remaining: function () {
-      return this.filterProperty('isCompleted', false).get('length');
-    }.property('@each.isCompleted'),
+  completed: function () {
+    return this.filterProperty('isCompleted', true).get('length');
+  }.property('@each.isCompleted'),
 
-    remainingFormatted: function () {
-      var remaining = this.get('remaining'),
-          plural = remaining === 1 ? 'item' : 'items';
-      return '<strong>%@</strong> %@ left'.fmt(remaining, plural);
-    }.property('remaining'),
+  hasCompleted: function () {
+    return this.get('completed') > 0;
+  }.property('completed'),
 
-    completed: function () {
-      return this.filterProperty('isCompleted', true).get('length');
-    }.property('@each.isCompleted'),
-
-    hasCompleted: function () {
-      return this.get('completed') > 0;
-    }.property('completed'),
-
-    allAreDone: function (key, value) {
-      if (value !== undefined) {
-        this.setEach('isCompleted', value);
-        return value;
-      } else {
-        return !!this.get('length') &&
-          this.everyProperty('isCompleted', true);
-      }
-    }.property('@each.isCompleted')
-  });
-//}());
+  allAreDone: function (key, value) {
+    if (value !== undefined) {
+      this.setEach('isCompleted', value);
+      return value;
+    } else {
+      return !!this.get('length') &&
+        this.everyProperty('isCompleted', true);
+    }
+  }.property('@each.isCompleted')
+});

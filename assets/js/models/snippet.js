@@ -1,23 +1,14 @@
-/* jshint strict: true */
-/*global Sharecode */
-/*global Ember */
-/*global DS */
+Sharecode.Snippet = DS.Model.extend({
+  name: DS.attr('string'),
+  email: DS.attr('string'),
+  isCompleted: DS.attr('boolean'),
 
-//(function () {
-  'use strict';
+  /*
+   *snippetDidChange: function () {
+   *  Ember.run.once(this, function () {
+   *    this.get('store').commit();
+   *  });
+   *}.observes('isCompleted', 'name')
+   */
 
-  Sharecode.Snippet = DS.Model.extend({
-    name: DS.attr('string'),
-    email: DS.attr('string'),
-    isCompleted: DS.attr('boolean'),
-
-    /*
-     *snippetDidChange: function () {
-     *  Ember.run.once(this, function () {
-     *    this.get('store').commit();
-     *  });
-     *}.observes('isCompleted', 'name')
-     */
-
-  });
-//}());
+});

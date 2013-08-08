@@ -1,28 +1,20 @@
-/* jshint strict: true */
-/*global Sharecode */
-/*global Ember */
+Sharecode.SnippetController = Ember.ObjectController.extend({
+  isEditing: false,
 
-//(function () {
- 'use strict';
+  editSnippet: function () {
+    this.set('isEditing', true);
+  },
 
- Sharecode.SnippetController = Ember.ObjectController.extend({
-   isEditing: false,
+  removeSnippet: function () {
+    var snippet = this.get('model');
 
-   editSnippet: function () {
-     this.set('isEditing', true);
-   },
-
-   removeSnippet: function () {
-     var snippet = this.get('model');
-
-     snippet.deleteRecord();
-     snippet.get('store').commit();
-   },
-   save: function () {
-     var snippet = this.get('model');
-     Ember.run.once(this, function () {
-       snippet.get('store').commit();
-     });
-   }
- });
-//}());
+    snippet.deleteRecord();
+    snippet.get('store').commit();
+  },
+  save: function () {
+    var snippet = this.get('model');
+    Ember.run.once(this, function () {
+      snippet.get('store').commit();
+    });
+  }
+});
