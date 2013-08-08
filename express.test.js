@@ -1,40 +1,28 @@
 var superagent = require('superagent');
 var expect = require('expect.js');
 
+var testSnippet = {
+  name: 'John',
+  email: 'john@rpjs.co'
+};
+
 describe('sharecode rest api server', function(){
   var id, id2;
 
   it('post object', function(done){
     superagent.post('http://localhost:3000/api/snippets')
-      .send({ name: 'John',
-        email: 'john@rpjs.co'
-      })
+      .send({snippet: testSnippet})
       .end(function(e,res){
-        //console.log(res.body.snippet[0]._id.length);
+        //console.log(res.body.snippet);
         expect(e).to.eql(null);
-        expect(res.body.snippet.length).to.eql(1);
-        expect(res.body.snippet[0]._id.length).to.eql(24);
-        id = res.body.snippet[0]._id;
+        id = res.body.snippet._id;
+        testSnippet._id = id;
+        expect(typeof res.body.snippet).to.eql('object');
+        expect(res.body.snippet).to.eql(testSnippet);
+        expect(res.body.snippet._id.length).to.eql(24);
         done();
       });
   });
-
-  /*
-   *it('post other object', function(done){
-   *  superagent.post('http://localhost:3000/api/snippets')
-   *    .send({ name: 'John',
-   *      email: 'john@rpjs.co'
-   *    })
-   *    .end(function(e,res){
-   *      // console.log(res.body.snippet)
-   *      expect(e).to.eql(null);
-   *      expect(res.body.snippet.length).to.eql(1);
-   *      expect(res.body.snippet[0]._id.length).to.eql(24);
-   *      id2 = res.body.snippet[0]._id;
-   *      done();
-   *    });
-   *});
-   */
 
   it('retrieves an object', function(done){
     superagent.get('http://localhost:3000/api/snippets/'+id)
@@ -59,17 +47,21 @@ describe('sharecode rest api server', function(){
       });
   });
 
+  var testSnippet2 = {
+    name: 'Peter',
+    email: 'peter@yahoo.com'
+  };
+
   it('updates an object', function(done){
     superagent.put('http://localhost:3000/api/snippets/'+id)
-      .send({
-        name: 'Peter',
-        email: 'peter@yahoo.com'
-      })
+      .send({snippet: testSnippet2})
       .end(function(e, res){
         //console.log(res.body);
         expect(e).to.eql(null);
-        //expect(typeof res.body.snippet).to.eql('object');
-        expect(res.body.msg).to.eql('success');
+        testSnippet2._id = id;
+        expect(typeof res.body.snippet).to.eql('object');
+        expect(res.body.snippet).to.eql(testSnippet2);
+        //expect(res.body.msg).to.eql('success');
         done();
       });
   });
@@ -90,11 +82,12 @@ describe('sharecode rest api server', function(){
   it('removes an object', function(done){
     superagent.del('http://localhost:3000/api/snippets/'+id)
       .end(function(e, res){
-        //console.log(res.body);
+        //console.log(res);
         expect(e).to.eql(null);
-        //expect(typeof res.body.snippet).to.eql('object');
-        expect(res.body.msg).to.eql('success');
+        expect(typeof res.body).to.eql('object');
+        expect(res.statusCode).to.eql(200);
         done();
       });
   });
+
 });

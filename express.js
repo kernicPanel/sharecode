@@ -30,7 +30,7 @@ app.get('/', function(req, res) {
   //res.sendfile('index.html');
 });
 
-app.get('/api/:collectionName', function(req, res) {
+app.get('/api/:collectionName', function(req, res, next) {
   req.collection.find({},{limit:10, sort: [['_id',-1]]}).toArray(function(e, results){
     if (e) {
       next(e);
@@ -39,18 +39,18 @@ app.get('/api/:collectionName', function(req, res) {
   });
 });
 
-app.post('/api/:collectionName', function(req, res) {
-  req.collection.insert(req.body, {}, function(e, results){
+app.post('/api/:collectionName', function(req, res, next) {
+  req.collection.insert(req.body.snippet, {}, function(e, results){
     if (e) {
       next(e);
     }
-    console.log('snippets : ', {snippet : results});
-    res.send({snippet : results});
+    console.log('snippets : ', {snippet : results[0]});
+    res.send({snippet : results[0]});
   });
 });
 
 
-app.get('/api/:collectionName/:id', function(req, res) {
+app.get('/api/:collectionName/:id', function(req, res, next) {
   req.collection.findOne({_id: req.collection.id(req.params.id)}, function(e, result){
     if (e) {
       next(e);
@@ -60,21 +60,24 @@ app.get('/api/:collectionName/:id', function(req, res) {
   });
 });
 
-app.put('/api/:collectionName/:id', function(req, res) {
-  req.collection.update({_id: req.collection.id(req.params.id)}, {$set:req.body}, {safe:true, multi:false}, function(e, result){
+app.put('/api/:collectionName/:id', function(req, res, next) {
+  var snippet = req.body.snippet;
+  req.collection.update({_id: req.collection.id(req.params.id)}, {$set:snippet}, {safe:true, multi:false}, function(e, result){
     if (e) {
       next(e);
     }
-    res.send((result===1)?{msg:'success'}:{msg:'error'});
+    snippet._id = req.params.id;
+    res.send({snippet: snippet}, 200);
   });
 });
 
-app.del('/api/:collectionName/:id', function(req, res) {
+app.del('/api/:collectionName/:id', function(req, res, next) {
   req.collection.remove({_id: req.collection.id(req.params.id)}, function(e, result){
     if (e) {
       next(e);
     }
-    res.send((result===1)?{msg:'success'}:{msg:'error'});
+    //res.send((result===1)?{msg:'success'}:{msg:'error'});
+    res.send({}, 200);
   });
 });
 
