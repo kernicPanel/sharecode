@@ -22,15 +22,17 @@
               <li {{bindAttr class="isCompleted:completed isEditing:editing"}}>
                 {{#if isEditing}}
                   {{view Sharecode.EditSnippetView snippetBinding="this"}}
+                  {{view Ember.TextField valueBinding='language'}}
+                  {{view Ember.TextArea valueBinding='body'}}
+                  <button {{action "saveSnippet"}} >save</button>
+                  <button {{action "restoreSnippet"}} >cancel</button>
+                  <button {{action "removeSnippet"}} class="destroy">delete</button>
                 {{else}}
                   {{view Ember.Checkbox checkedBinding="isCompleted" class="toggle"}}
                   <label {{action "editSnippet" on="doubleClick"}}>{{name}}</label>
-<ul>
-  <li>{{id}}</li>
-  <li>{{name}}</li>
-  <li>{{email}}</li>
-</ul>
-                  <button {{action "removeSnippet"}} class="destroy">delete</button>
+                  <p>{{language}}</p>
+                  <pre>{{body}}</pre>
+                  <button {{action "editSnippet"}} >edit</button>
                 {{/if}}
                 </li>
             {{/each}}

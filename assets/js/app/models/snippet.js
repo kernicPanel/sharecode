@@ -1,6 +1,7 @@
 Sharecode.Snippet = DS.Model.extend({
   name: DS.attr('string'),
-  email: DS.attr('string'),
+  language: DS.attr('string'),
+  body: DS.attr('string'),
   isCompleted: DS.attr('boolean'),
 
   /*
