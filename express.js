@@ -7,7 +7,7 @@ app.use(express.bodyParser());
 var db = mongoskin.db('localhost:27017/sharecode', {safe:true});
 
 app.param('collectionName', function(req, res, next, collectionName){
-  if (collectionName === 'snippets') {
+  if (collectionName === 'snippets' || collectionName === 'tags') {
     req.collection = db.collection(collectionName);
     req.collectionName = collectionName;
   }
