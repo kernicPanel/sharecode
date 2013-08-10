@@ -13,6 +13,7 @@ Sharecode.SnippetsRoute = Ember.Route.extend({
 
 Sharecode.SnippetsIndexRoute = Ember.Route.extend({
   setupController: function () {
+    var tags = Sharecode.Tag.find();
     var snippets = Sharecode.Snippet.find();
     this.controllerFor('snippets').set('filteredSnippets', snippets);
   }
