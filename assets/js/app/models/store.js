@@ -1,6 +1,7 @@
 Sharecode.Store = DS.Store.extend({
   revision: 12,
-  adapter: 'DS.RESTAdapter'
+  //adapter: 'DS.RESTAdapter'
+  adapter: DS.FixtureAdapter.create()
 });
 
 DS.RESTAdapter.reopen({
