@@ -14,7 +14,21 @@ Sharecode.Snippet = DS.Model.extend({
 
       tagsIds.forEach(function(tagId){
         Sharecode.Tag.find(tagId).then(function(tag) {
-          tags.pushObject(tag);
+          if (tag.get('name') === null) {
+            tag = Sharecode.Tag.createRecord({
+              name: tagId
+            });
+            Ember.run.once(this, function () {
+              var savedTag = tag.save().then(function(){
+                Sharecode.Tag.find({name:tagId}).then(function(newTag) {
+                  tags.pushObjects(newTag);
+                });
+              });
+            });
+          }
+          else {
+            tags.pushObject(tag);
+          }
         });
       });
 
