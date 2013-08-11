@@ -79,6 +79,18 @@ describe('sharecode rest api server', function(){
       });
   });
 
+  it('retrieves a snippet from his name', function(done){
+    superagent.get('http://localhost:3000/api/snippets?name='+testSnippet2.name)
+      .end(function(e, res){
+        //console.log(res.body);
+        expect(e).to.eql(null);
+        expect(typeof res.body.snippet[0]).to.eql('object');
+        expect(res.body.snippet[0]._id.length).to.eql(24);
+        expect(res.body.snippet[0].name).to.eql(testSnippet2.name);
+        done();
+      });
+  });
+
   it('removes a snippet', function(done){
     superagent.del('http://localhost:3000/api/snippets/'+id)
       .end(function(e, res){

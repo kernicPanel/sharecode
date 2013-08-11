@@ -35,14 +35,21 @@ app.get('/', function(req, res) {
 });
 
 app.get('/api/:collectionName', function(req, res, next) {
-  console.log('req.params');
-  req.collection.find({},{limit:10, sort: [['_id',-1]]}).toArray(function(e, results){
+  //console.log("req : ", req);
+  //console.log('req.query', req.query);
+  var query = req.query || {};
+  req.collection.find(query,{limit:10, sort: [['_id',-1]]}).toArray(function(e, results){
     if (e) {
       next(e);
     }
     //res.send({snippets : results});
     var response = {};
-    response[req.collectionName] = results;
+    if (req._parsedUrl.query !== null) {
+      response[singularize[req.collectionName]] = results;
+    }
+    else {
+      response[req.collectionName] = results;
+    }
     res.send(response);
   });
 });
