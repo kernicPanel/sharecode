@@ -3,8 +3,25 @@ Sharecode.Snippet = DS.Model.extend({
   language: DS.attr('string'),
   body: DS.attr('string'),
   tags: DS.hasMany('Sharecode.Tag'),
-  tagsNames: function(){
-    return tags.getEach('name');
+  tagsNames: function(key, value){
+    if (arguments.length === 1) {
+      return this.get('tags').getEach('id');
+    }
+    else {
+      var tagsIds = value.split(",");
+      var tags = this.get('tags');
+      tags.set('content', []);
+
+      tagsIds.forEach(function(tagId){
+        console.log('tagId :', tagId);
+        Sharecode.Tag.find(tagId).then(function(tag) {
+          console.log('tagId :', tagId, tag);
+          tags.pushObject(tag);
+        });
+      });
+
+      return value;
+    }
   }.property('tags'),
   isCompleted: DS.attr('boolean'),
 

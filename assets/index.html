@@ -21,12 +21,19 @@
           <ul id="snippet-list">
             {{#each filteredSnippets itemController="snippet"}}
               <li {{bindAttr class="isCompleted:completed isEditing:editing"}}>
-                <p>{{id}}</p>
+                <p>
+                  {{id}}
+                  {{view Ember.TextField valueBinding='tagsNames'}}
+                  {{#each tags}}
+                    <span>{{id}}:{{name}}</span>
+                  {{/each}}
+                </p>
+                  
                 {{#if isEditing}}
                   {{view Sharecode.EditSnippetView snippetBinding="this"}}
                   {{view Ember.TextField valueBinding='language'}}
                   <hr />
-                  {{view Sharecode.Select2SelectView snippetBinding="this"}}
+                  {{view Sharecode.Select2SelectView valueBinding='tagsNames'}}
                   {{view Ember.TextArea valueBinding='body'}}
                   <hr />
                   <button {{action "saveSnippet"}} >save</button>
@@ -35,9 +42,6 @@
                 {{else}}
                   {{view Ember.Checkbox checkedBinding="isCompleted" class="toggle"}}
                   <label {{action "editSnippet" on="doubleClick"}}>{{name}}</label>
-                  {{#each tags}}
-                    <span>{{name}}</span>
-                  {{/each}}
                   <p>{{language}}</p>
                   <pre>{{body}}</pre>
                   <button {{action "editSnippet"}} >edit</button>

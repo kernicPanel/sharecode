@@ -27,7 +27,7 @@ Sharecode.EditSnippetView = Ember.TextField.extend({
 });
 
 Sharecode.Select2SelectView = Ember.TextField.extend({
-  valueBinding: 'snippet.tagNames',
+  //valueBinding: 'tagNames',
   //value: 'tagNames',
   prompt: 'Please select...',
   classNames: ['input-xlarge'],
@@ -53,22 +53,18 @@ Sharecode.Select2SelectView = Ember.TextField.extend({
       placeholder: 'Tags',
       minimumInputLength: 0,
       tags: tagsArray,
+      initSelection : function (element, callback) {
+        var data = [];
+        $(element.val().split(",")).each(function () {
+          data.push({id: this, text: this});
+        });
+        //console.log('data', data);
+        callback(data);
+      },
       formatSelection: function(elem, container){
-        console.log('formatSelection', elem, container);
+        //console.log('formatSelection', elem, container);
         return elem.text;
       }
-    })
-    .on('change', function(e){
-      console.log('e', e, this);
-      console.log("change "+JSON.stringify({val:e.val, added:e.added, removed:e.removed}));
-      //$(this).val(e.val.join(','));
-      //push tag object to nippet object
-      var newTag = Sharecode.Tag.find(e.val);
-      //var snippet = this.get('snippet');
-      var tags = snippet.get('tags');
-      tags.pushObject(newTag);
-      console.log('tags', tags.getEach('name'));
-
     });
   },
 
