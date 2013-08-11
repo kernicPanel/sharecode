@@ -33,6 +33,10 @@ Sharecode.Snippet = DS.Model.extend({
 
 });
 
+DS.RESTAdapter.map(Sharecode.Snippet, {
+  tags: { embedded: 'always' },
+});
+
 Sharecode.Tag = DS.Model.extend({
   name: DS.attr('string'),
   snippet: DS.belongsTo('Sharecode.Snippet')
