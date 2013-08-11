@@ -20,6 +20,7 @@ app.use(express.static('assets'));
 
 var singularize = [];
 singularize['snippets'] = 'snippet';
+singularize['tags'] = 'tag';
 
 //app.use(function(req, res, next){
   //console.log(res);
