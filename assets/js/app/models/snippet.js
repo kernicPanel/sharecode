@@ -39,7 +39,7 @@ DS.RESTAdapter.map(Sharecode.Snippet, {
 
 Sharecode.Tag = DS.Model.extend({
   name: DS.attr('string'),
-  snippet: DS.belongsTo('Sharecode.Snippet')
+  snippet: DS.hasMany('Sharecode.Snippet')
 });
 
 
