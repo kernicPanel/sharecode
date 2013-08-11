@@ -23,7 +23,6 @@
               <li {{bindAttr class="isCompleted:completed isEditing:editing"}}>
                 <p>
                   {{id}}
-                  {{view Ember.TextField valueBinding='tagsNames'}}
                   {{#each tags}}
                     <span>{{id}}:{{name}}</span>
                   {{/each}}

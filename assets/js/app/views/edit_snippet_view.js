@@ -41,13 +41,11 @@ Sharecode.Select2SelectView = Ember.TextField.extend({
     var tags = Sharecode.Tag.find();
     var tagsArray = [];
     tags.forEach(function(tag){
-      //console.log('tag', tag);
       tagsArray.push({
         id: tag.get('id'),
         text: tag.get('name'),
       });
     });
-    test = tagsArray;
     this.$().select2({
       containerCss: {width: 200},
       placeholder: 'Tags',
@@ -56,13 +54,19 @@ Sharecode.Select2SelectView = Ember.TextField.extend({
       initSelection : function (element, callback) {
         var data = [];
         $(element.val().split(",")).each(function () {
-          data.push({id: this, text: this});
+          Sharecode.Tag.find(this).then(function(tag) {
+            data.push({
+              id: tag.get('id'),
+              text: tag.get('name')
+            });
+            callback(data);
+          });
         });
-        //console.log('data', data);
-        callback(data);
+      },
+      formatResult: function(elem, container){
+        return elem.text;
       },
       formatSelection: function(elem, container){
-        //console.log('formatSelection', elem, container);
         return elem.text;
       }
     });

@@ -13,9 +13,7 @@ Sharecode.Snippet = DS.Model.extend({
       tags.set('content', []);
 
       tagsIds.forEach(function(tagId){
-        console.log('tagId :', tagId);
         Sharecode.Tag.find(tagId).then(function(tag) {
-          console.log('tagId :', tagId, tag);
           tags.pushObject(tag);
         });
       });
