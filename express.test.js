@@ -84,9 +84,9 @@ describe('sharecode rest api server', function(){
       .end(function(e, res){
         //console.log(res.body);
         expect(e).to.eql(null);
-        expect(typeof res.body.snippet[0]).to.eql('object');
-        expect(res.body.snippet[0]._id.length).to.eql(24);
-        expect(res.body.snippet[0].name).to.eql(testSnippet2.name);
+        expect(typeof res.body.snippets[0]).to.eql('object');
+        expect(res.body.snippets[0]._id.length).to.eql(24);
+        expect(res.body.snippets[0].name).to.eql(testSnippet2.name);
         done();
       });
   });

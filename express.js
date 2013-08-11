@@ -42,14 +42,8 @@ app.get('/api/:collectionName', function(req, res, next) {
     if (e) {
       next(e);
     }
-    //res.send({snippets : results});
     var response = {};
-    if (req._parsedUrl.query !== null) {
-      response[singularize[req.collectionName]] = results;
-    }
-    else {
-      response[req.collectionName] = results;
-    }
+    response[req.collectionName] = results;
     res.send(response);
   });
 });
