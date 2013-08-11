@@ -9,7 +9,7 @@ var testSnippet = {
 describe('sharecode rest api server', function(){
   var id, id2;
 
-  it('post object', function(done){
+  it('post a snippet', function(done){
     superagent.post('http://localhost:3000/api/snippets')
       .send({snippet: testSnippet})
       .end(function(e,res){
@@ -24,7 +24,7 @@ describe('sharecode rest api server', function(){
       });
   });
 
-  it('retrieves an object', function(done){
+  it('retrieves a snippet', function(done){
     superagent.get('http://localhost:3000/api/snippets/'+id)
       .end(function(e, res){
         //console.log(res.body);
@@ -52,7 +52,7 @@ describe('sharecode rest api server', function(){
     email: 'peter@yahoo.com'
   };
 
-  it('updates an object', function(done){
+  it('updates a snippet', function(done){
     superagent.put('http://localhost:3000/api/snippets/'+id)
       .send({snippet: testSnippet2})
       .end(function(e, res){
@@ -66,7 +66,7 @@ describe('sharecode rest api server', function(){
       });
   });
 
-  it('checks an updated object', function(done){
+  it('checks an updated snippet', function(done){
     superagent.get('http://localhost:3000/api/snippets/'+id)
       .end(function(e, res){
         //console.log(res.body);
@@ -79,7 +79,7 @@ describe('sharecode rest api server', function(){
       });
   });
 
-  it('removes an object', function(done){
+  it('removes a snippet', function(done){
     superagent.del('http://localhost:3000/api/snippets/'+id)
       .end(function(e, res){
         //console.log(res);
